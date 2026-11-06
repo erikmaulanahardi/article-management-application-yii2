@@ -59,16 +59,26 @@ class SiteController extends Controller
      *
      * @return string
      */
+
     public function actionIndex()
     {
-	$data = \app\models\Post::find()->orderBy('date DESC')->all();
-        return $this->render('index', ['data' => $data]);
+        // Ambil hanya artikel yang sudah disetujui Admin
+        $data = \app\models\Post::find()
+            ->where(['status' => 'published'])
+            ->orderBy(['date' => SORT_DESC])
+            ->all();
+
+        return $this->render('index', [
+            'data' => $data
+        ]);
     }
 
 
-public function actionMobile(){
-	 return $this->render('mobile');
-}
+
+    public function actionMobile()
+    {
+        return $this->render('mobile');
+    }
 
     /**
      * Login action.

@@ -21,13 +21,13 @@ class AccountController extends Controller
     public function behaviors()
     {
         return [
-	'access' => [
+            'access' => [
                 'class' => AccessControl::className(),
                 'rules' => [
                     [
                         'actions' => ['index', 'create', 'update', 'delete', 'view'],
                         'allow' => true,
-                        'roles' => ['admin'],
+                        'roles' => ['Admin'],
                     ],
                 ],
             ],
@@ -78,13 +78,13 @@ class AccountController extends Controller
         $model = new Account();
 
         if ($model->load(Yii::$app->request->post())) {
-		$role = \Yii::$app->authManager->getRole(strtolower($model->role));
-           	\Yii::$app->authManager->revokeAll($model->username);
-             	\Yii::$app->authManager->assign($role, $model->username);
-		$model->password = md5($model->password);
-		if($model->save()){
-            		return $this->redirect(['view', 'id' => $model->username]);
-		}
+            $role = \Yii::$app->authManager->getRole($model->role);
+            \Yii::$app->authManager->revokeAll($model->username);
+            \Yii::$app->authManager->assign($role, $model->username);
+            $model->password = md5($model->password);
+            if ($model->save()) {
+                return $this->redirect(['view', 'id' => $model->username]);
+            }
         }
 
         return $this->render('create', [
@@ -104,17 +104,17 @@ class AccountController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post())) {
-		$role = \Yii::$app->authManager->getRole(strtolower($model->role));
-                \Yii::$app->authManager->revokeAll($model->username);
-                \Yii::$app->authManager->assign($role, $model->username);
-		$model->password = md5($model->password);
+            $role = \Yii::$app->authManager->getRole($model->role);
+            \Yii::$app->authManager->revokeAll($model->username);
+            \Yii::$app->authManager->assign($role, $model->username);
+            $model->password = md5($model->password);
 
-                if($model->save()){
-            		return $this->redirect(['view', 'id' => $model->username]);
-		}
+            if ($model->save()) {
+                return $this->redirect(['view', 'id' => $model->username]);
+            }
         }
-	
-	$model->password = null;
+
+        $model->password = null;
 
         return $this->render('update', [
             'model' => $model,

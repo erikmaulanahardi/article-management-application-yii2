@@ -1,27 +1,54 @@
+
 <?php
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
-
-/* @var $this yii\web\View */
-/* @var $model app\models\Account */
-/* @var $form yii\widgets\ActiveForm */
 ?>
 
 <div class="account-form">
 
     <?php $form = ActiveForm::begin(); ?>
-	
-	<?= $form->field($model, 'username')->textInput(['maxlength' => true, 'disabled' => !$model->isNewRecord]) ?>
 
-    <?= $form->field($model, 'password')->passwordInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'username')->textInput([
+        'maxlength' => true,
+        'disabled' => !$model->isNewRecord,
+        'class' => 'form-control account-input',
+        'placeholder' => 'Masukkan username',
+    ]) ?>
 
-    <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'password')->passwordInput([
+        'maxlength' => true,
+        'class' => 'form-control account-input',
+        'placeholder' => $model->isNewRecord
+            ? 'Masukkan password'
+            : 'Masukkan password baru',
+    ])->hint($model->isNewRecord
+        ? 'Gunakan password untuk akun baru.'
+        : 'Isi password baru jika ingin menggantinya.'
+    ) ?>
 
-    <?= $form->field($model, 'role')->dropDownlist(['admin'=>'Admin', 'author'=>'Author']) ?>
+    <?= $form->field($model, 'name')->textInput([
+        'maxlength' => true,
+        'class' => 'form-control account-input',
+        'placeholder' => 'Masukkan nama lengkap',
+    ]) ?>
 
-    <div class="form-group">
-        <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
+    <?= $form->field($model, 'role')->dropDownList([
+        'admin' => 'Admin',
+        'author' => 'Author',
+    ], [
+        'class' => 'form-control account-input',
+        'prompt' => 'Pilih role akun',
+    ]) ?>
+
+    <div class="account-form-actions">
+        <?= Html::submitButton('Simpan Akun', [
+            'class' => 'account-create-button',
+        ]) ?>
+
+        <?= Html::a('Batal', ['index'], [
+            'class' => 'account-cancel-button',
+        ]) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

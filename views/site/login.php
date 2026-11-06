@@ -1,43 +1,58 @@
-<?php
 
-/* @var $this yii\web\View */
-/* @var $form yii\bootstrap\ActiveForm */
-/* @var $model app\models\LoginForm */
+<?php
 
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 
 $this->title = 'Login';
-$this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="site-login">
-    <h1><?= Html::encode($this->title) ?></h1>
 
-    <p>Please fill out the following fields to login:</p>
+<div class="login-wrapper">
 
-    <?php $form = ActiveForm::begin([
-        'id' => 'login-form',
-        'layout' => 'horizontal',
-        'fieldConfig' => [
-            'template' => "{label}\n<div class=\"col-lg-3\">{input}</div>\n<div class=\"col-lg-8\">{error}</div>",
-            'labelOptions' => ['class' => 'col-lg-1 control-label'],
-        ],
-    ]); ?>
+    <div class="login-card">
 
-        <?= $form->field($model, 'username')->textInput(['autofocus' => true]) ?>
+        <div class="login-header">
+            <div class="login-icon">
+                <span class="glyphicon glyphicon-user"></span>
+            </div>
 
-        <?= $form->field($model, 'password')->passwordInput() ?>
+            <h2>Halaman Login</h2>
+            <p>Login dulu yaaa!</p>
+        </div>
+
+        <?php $form = ActiveForm::begin([
+            'id' => 'login-form',
+            'options' => ['class' => 'login-form'],
+        ]); ?>
+
+        <?= $form->field($model, 'username')->textInput([
+            'autofocus' => true,
+            'placeholder' => 'Masukkan username',
+            'class' => 'form-control login-input',
+        ])->label('Username') ?>
+
+        <?= $form->field($model, 'password')->passwordInput([
+            'placeholder' => 'Masukkan password',
+            'class' => 'form-control login-input',
+        ])->label('Password') ?>
 
         <?= $form->field($model, 'rememberMe')->checkbox([
-            'template' => "<div class=\"col-lg-offset-1 col-lg-3\">{input} {label}</div>\n<div class=\"col-lg-8\">{error}</div>",
+            'template' => "{input} {label}",
         ]) ?>
 
         <div class="form-group">
-            <div class="col-lg-offset-1 col-lg-11">
-                <?= Html::submitButton('Login', ['class' => 'btn btn-primary', 'name' => 'login-button']) ?>
-            </div>
+            <?= Html::submitButton('Login', [
+                'class' => 'btn btn-login',
+                'name' => 'login-button',
+            ]) ?>
         </div>
 
-    <?php ActiveForm::end(); ?>
+        <?php ActiveForm::end(); ?>
+
+        <div class="login-footer">
+            <p>My Application &copy; <?= date('Y') ?></p>
+        </div>
+
+    </div>
 
 </div>

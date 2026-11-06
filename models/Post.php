@@ -31,10 +31,13 @@ class Post extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['title', 'content', 'date', 'username'], 'required'],
-            [['title', 'content'], 'string'],
+            [['title', 'content'], 'required'],
+            [['content', 'rejection_reason'], 'string'],
+            [['status'], 'string', 'max' => 20],
+            [['status'], 'default', 'value' => 'draft'],
             [['date'], 'safe'],
-            [['username'], 'string', 'max' => 45],
+            [['title'], 'string', 'max' => 255],
+            [['username'], 'string', 'max' => 50],
             [['username'], 'exist', 'skipOnError' => true, 'targetClass' => Account::className(), 'targetAttribute' => ['username' => 'username']],
         ];
     }
